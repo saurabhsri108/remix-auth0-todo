@@ -36,6 +36,6 @@
   "engines": {
     "npm": "please-use-yarn",
     "yarn": "1.22.19",
-    "node": "16.15.1"
+    "node": "16"
   }
 }
