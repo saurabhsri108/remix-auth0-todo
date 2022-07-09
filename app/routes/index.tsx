@@ -1,3 +1,3 @@
-export const Index = () => {
-
+export default function Index() {
+    return null;
 };
