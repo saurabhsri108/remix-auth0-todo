@@ -85,6 +85,12 @@ Everthing starts with the compiler: remix build. It uses "esbuild" to create few
 5. **The browser framework knows about the compiler's asset manifest.** It can match the URL of the link, read the manifestm, and then prefetch all the data, JavaScript modules, and even CSS resources for the next page. This makes Remix apps feel fast even when networks are slow.
 6. **Browser Framework reaches into the controller level of the backend.**
 
+## Optimistic UI
+
+It's a pattern to avoid showing busy spinners in our UI and make our app feel like it's responding instantly to user interactions that change data on the server. It will take some time to make it to the server to be processed, we often have enough information in the UI that sent it to fake it. If it fails for some reason, we can then notify the user that there was a problem. In remix, this can be done using **useTransition** and **useFetcher**.
+
+Remix automatically does the auto-cancellation/abortion of multiple request to backend and only values the last action. So, in case you press delete button multiple times, only the last press is accepted. Rest is cancelled POST. This is browser default which gets messed up in regular JS apps due to JS!
+
 ## Side Info
 
 1. Remix uses "tree shaking" to remove server code from browser bundles. Anything inside of Route module "loader", "action", and "headers" exports will be removed. It's a great approach but suffers from ecosystem compatibility.
@@ -93,16 +99,14 @@ Everthing starts with the compiler: remix build. It uses "esbuild" to create few
 
 3. Since the code runs on both server and client, sometimes the need of **typeof window === "undefined"** check will arise. However, Deno supports window! So, it's better to check **typeof document === "undefined"** instead which works everywhere.
 
-## In-depth topics
+## Some important topics
 
 - **[HTTP Caching](./read-me-docs/1-http-caching.md)**
 - **[CDN Caching, Static Site Generation, and Server Side Rendering](./read-me-docs/2-cdn-ssg-ssr.md)**
 - **[Data Flow](./read-me-docs/3-data-flow.md)**
 - **[Error Boundary](./read-me-docs/4-error-boundary.md)**
-- **[Loaders, Actions, Headers, Links](./read-me-docs/5-loaders-actions-headers-links.md)**
 
-## Optimistic UI
+## Most Important Docs Sources
 
-It's a pattern to avoid showing busy spinners in our UI and make our app feel like it's responding instantly to user interactions that change data on the server. It will take some time to make it to the server to be processed, we often have enough information in the UI that sent it to fake it. If it fails for some reason, we can then notify the user that there was a problem. In remix, this can be done using **useTransition** and **useFetcher**.
-
-Remix automatically does the auto-cancellation/abortion of multiple request to backend and only values the last action. So, in case you press delete button multiple times, only the last press is accepted. Rest is cancelled POST. This is browser default which gets messed up in regular JS apps due to JS!
+1. **[API Conventions](https://remix.run/docs/en/v1/api/conventions)**
+1. **[Remix Packages](https://remix.run/docs/en/v1/api/remix)**

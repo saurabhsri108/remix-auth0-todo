@@ -16,12 +16,4 @@
 ### Root
 
 1. **File: root.tsx**
-
-### Links
-
-```jsx
-import styles from '../styles/index.css';
-export function links() {
-  return [{ rel: 'stylesheet', href: styles }];
-}
-```
+   The first app root file.
