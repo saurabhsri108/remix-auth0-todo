@@ -64,9 +64,6 @@ export default function Todo() {
       addingFormRef.current?.reset();
       taskRef.current?.focus();
     }
-    if (isDeleting) {
-      tasks = tasks.filter((task: ITaskItem) => task.id !== Number(submission?.formData.get("id")));
-    }
   }, [isAdding, isDeleting, submission?.formData, tasks]);
 
 
