@@ -8,10 +8,3 @@ datasource db {
   url                  = env("PLANETSCALE_DATABASE_URL")
   referentialIntegrity = "prisma"
 }
-
-model Task {
-  id          Int      @id @default(autoincrement())
-  description String
-  completed   Boolean
-  date        DateTime @default(now())
-}
