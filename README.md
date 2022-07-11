@@ -91,6 +91,8 @@ It's a pattern to avoid showing busy spinners in our UI and make our app feel li
 
 Remix automatically does the auto-cancellation/abortion of multiple request to backend and only values the last action. So, in case you press delete button multiple times, only the last press is accepted. Rest is cancelled POST. This is browser default which gets messed up in regular JS apps due to JS!
 
+Hint: useFetcher() is the important thing here.
+
 ## Side Info
 
 1. Remix uses "tree shaking" to remove server code from browser bundles. Anything inside of Route module "loader", "action", and "headers" exports will be removed. It's a great approach but suffers from ecosystem compatibility.

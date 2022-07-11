@@ -8,3 +8,123 @@ datasource db {
   url                  = env("PLANETSCALE_DATABASE_URL")
   referentialIntegrity = "prisma"
 }
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum PaymentMode {
+  CASH
+  CREDIT_CARD
+  DEBIT_CARD
+  UPI
+}
+
+model User {
+  id             String     @id @default(cuid())
+  auth0_id       String     @unique
+  firstname      String
+  lastname       String
+  email          String     @unique
+  role           Role       @default(USER)
+  password       String
+  phone_number   Int?
+  bio            String?
+  date_of_birth  DateTime?
+  avatar         String?    @unique
+  address_line_1 String?
+  address_line_2 String?
+  city           String?
+  state          String?
+  pincode        Int?
+  country        String?
+  reviews        Reviews[]
+  orders         Order[]
+  carts          Cart[]
+  wishlists      Wishlist[]
+  created_at     DateTime   @default(now())
+  updated_at     DateTime   @updatedAt
+
+  @@index([auth0_id, email])
+}
+
+model Product {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  description String?
+  rating      Int
+  price       Int
+  quantity    Int
+  reviews     Reviews[]
+  catalog     Catalog   @relation(fields: [catalog_id], references: [id])
+  catalog_id  String    @unique
+  order       Order?    @relation(fields: [order_id], references: [id])
+  order_id    String?
+  cart        Cart?     @relation(fields: [cart_id], references: [id])
+  cart_id     String?
+  wishlist    Wishlist? @relation(fields: [wishlist_id], references: [id])
+  wishlist_id String?
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+}
+
+model Reviews {
+  id         String   @id @default(cuid())
+  user       User     @relation(fields: [user_id], references: [id])
+  product    Product  @relation(fields: [product_id], references: [id])
+  user_id    String
+  product_id String
+  rating     Int
+  comment    String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Catalog {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  description String?
+  products    Product[]
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+}
+
+model Order {
+  id             String      @id @default(cuid())
+  user           User        @relation(fields: [user_id], references: [id])
+  user_id        String
+  products       Product[]
+  items_price    Int
+  sgst           Int
+  cgst           Int
+  total_tax      Int
+  delivery_price Int
+  total_price    Int
+  is_paid        Boolean     @default(false)
+  payment_id     String?
+  payment_mode   PaymentMode @default(CASH)
+  payment_date   DateTime?
+  created_at     DateTime    @default(now())
+  updated_at     DateTime    @updatedAt
+}
+
+model Cart {
+  id          String    @id @default(cuid())
+  user        User      @relation(fields: [user_id], references: [id])
+  user_id     String
+  products    Product[]
+  items_price Int
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+}
+
+model Wishlist {
+  id          String    @id @default(cuid())
+  user        User      @relation(fields: [user_id], references: [id])
+  user_id     String
+  products    Product[]
+  items_price Int
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+}
