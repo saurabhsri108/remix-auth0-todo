@@ -2,7 +2,45 @@
 
 ## Aim
 
-To build a full functional todo app or perhaps a Kanban Board to understand how remix works in depth. The goal is to learn data flow, architecture, styling, authentication, forms, etc. in remix.
+To build a simple fully functional E-Commerce App to understand how remix works in depth. The goal is to learn data flow, architecture, styling, authentication, forms, etc. in remix.
+
+## Steps to Install
+
+- Clone this repo.
+- Install node version 16 and yarn version 1.22.17
+- Run "yarn" to install the dependencies
+- Create a local **".env"** file and put these variables:
+
+  ```js
+  NODE_ENV = 'development';
+  AUTH0_CLIENT_ID = 'YOUR_AUTH0_CLIENT_ID';
+  AUTH0_CLIENT_SECRET = 'YOUR_AUTH0_CLIENT_SECRET';
+  AUTH0_CLIENT_DOMAIN = 'YOUR_AUTH0_CLIENT_DOMAIN';
+
+  DATABASE_URL = 'YOUR_LOCAL_MYSQL_URI';
+  // or
+  DATABASE_URL = 'YOUR_PLANETSCALE_URI';
+  ```
+
+- Run **"npx prisma migrate dev --name storeapp"** to create the migration file using prisma. This will create mysql tables under storeapp database on your MySQL. **Note:** This won't work in case of planetscale URI due to permission error.
+- To use PlanetScale rather than local MySQL, uncomment the referentialIntegrity parts below from the **schema.prisma** file:
+
+  ```js
+  generator client {
+  provider = "prisma-client-js"
+  // previewFeatures = ["referentialIntegrity"]
+  }
+
+  datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  // referentialIntegrity = true
+  }
+  ```
+
+- Run **"npx prisma db push"** for planetscale case instead as it works.
+- Run **"npx prisma studio"** to start the prisma studio tool. Requires prisma installation.
+- Run **"yarn dev"** to start the app. Note to change the **dev script** in package.json file.
 
 ## Philosophy of Remix
 
@@ -91,9 +129,11 @@ It's a pattern to avoid showing busy spinners in our UI and make our app feel li
 
 Remix automatically does the auto-cancellation/abortion of multiple request to backend and only values the last action. So, in case you press delete button multiple times, only the last press is accepted. Rest is cancelled POST. This is browser default which gets messed up in regular JS apps due to JS!
 
+Hint: useFetcher() is the important thing here.
+
 ## Side Info
 
-1. Remix uses "tree shaking" to remove server code from browser bundles. Anything inside of Route module "loader", "action", and "headers" exports will be removed. It's a great approach but suffers from ecosystem compatibility.
+1. Remix uses "tree shaking" to remove server code from browser bundles. Anything inside of Route module "loader", "action", and "headers" exports will be removed. It's a great approach but suffers from ecosystem compatibility. Also, adding ".server" to the file names if they are only server side code helps compiler to get a explicit hint to not include it in browser side code compilation.
 
 2. When importing a third-party module, Remix checks the **package.json** of that package for **"sideEffects": false**. If that is configured, Remix knows it can safely remove the code from the client bundles. Without it, the imports remain because code may depend on the module's side effects.
 
@@ -101,10 +141,12 @@ Remix automatically does the auto-cancellation/abortion of multiple request to b
 
 ## Some important topics
 
-- **[HTTP Caching](./read-me-docs/1-http-caching.md)**
-- **[CDN Caching, Static Site Generation, and Server Side Rendering](./read-me-docs/2-cdn-ssg-ssr.md)**
-- **[Data Flow](./read-me-docs/3-data-flow.md)**
-- **[Error Boundary](./read-me-docs/4-error-boundary.md)**
+- **[HTTP Caching](./research-notes/1-http-caching.md)**
+- **[CDN Caching, Static Site Generation, and Server Side Rendering](./research-notes/2-cdn-ssg-ssr.md)**
+- **[Data Flow](./research-notes/3-data-flow.md)**
+- **[Error Boundary](./research-notes/4-error-boundary.md)**
+- **[Catch Boundary - Not Found](./research-notes/6-catch-boundary.md)**
+- **[Sessions](./research-notes/5-using-session.md)**
 
 ## Most Important Docs Sources
 
