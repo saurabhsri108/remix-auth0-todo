@@ -1,4 +1,13 @@
+import type { LoaderFunction } from '@remix-run/node';
 import { NavLink } from '@remix-run/react';
+import { authenticator } from '~/utils/auth.server';
+
+export const loader: LoaderFunction = async ({ request }) => {
+    await authenticator.isAuthenticated(request, {
+        failureRedirect: '/auth/auth0/login',
+    });
+    return null;
+};
 
 export default function Index() {
     return <nav className='flex flex-col gap-2'>

@@ -23,16 +23,16 @@ enum PaymentMode {
 
 model User {
   id                        String            @id @default(cuid())
-  auth0_id                  String            @unique
+  auth0_id                  String?           @unique
+  provider                  String            @default("email")
   username                  String            @unique
-  firstname                 String
-  lastname                  String
+  firstname                 String?           @db.VarChar(128)
+  lastname                  String?           @db.VarChar(128)
   email                     String            @unique
   email_verified            Boolean           @default(false)
-  password                  String
   role                      Role              @default(USER)
-  phone_number              Int?
-  bio                       String?
+  phone_number              Int?              @db.Int
+  bio                       String?           @db.Text
   date_of_birth             DateTime?
   avatar_url                String?           @unique
   address_line_1            String?
@@ -41,6 +41,7 @@ model User {
   state                     String?
   pincode                   Int?
   country                   String?
+  locale                    String?           @default("en") @db.VarChar(2)
   reviews                   Reviews[]
   orders                    Order[]
   carts                     Cart[]

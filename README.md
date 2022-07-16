@@ -133,7 +133,7 @@ Hint: useFetcher() is the important thing here.
 
 ## Side Info
 
-1. Remix uses "tree shaking" to remove server code from browser bundles. Anything inside of Route module "loader", "action", and "headers" exports will be removed. It's a great approach but suffers from ecosystem compatibility.
+1. Remix uses "tree shaking" to remove server code from browser bundles. Anything inside of Route module "loader", "action", and "headers" exports will be removed. It's a great approach but suffers from ecosystem compatibility. Also, adding ".server" to the file names if they are only server side code helps compiler to get a explicit hint to not include it in browser side code compilation.
 
 2. When importing a third-party module, Remix checks the **package.json** of that package for **"sideEffects": false**. If that is configured, Remix knows it can safely remove the code from the client bundles. Without it, the imports remain because code may depend on the module's side effects.
 
@@ -141,10 +141,12 @@ Hint: useFetcher() is the important thing here.
 
 ## Some important topics
 
-- **[HTTP Caching](./read-me-docs/research-notes/1-http-caching.md)**
-- **[CDN Caching, Static Site Generation, and Server Side Rendering](./read-me-docs/research-notes/2-cdn-ssg-ssr.md)**
-- **[Data Flow](./read-me-docs/research-notes/3-data-flow.md)**
-- **[Error Boundary](./read-me-docs/research-notes/4-error-boundary.md)**
+- **[HTTP Caching](./research-notes/1-http-caching.md)**
+- **[CDN Caching, Static Site Generation, and Server Side Rendering](./research-notes/2-cdn-ssg-ssr.md)**
+- **[Data Flow](./research-notes/3-data-flow.md)**
+- **[Error Boundary](./research-notes/4-error-boundary.md)**
+- **[Catch Boundary - Not Found](./research-notes/6-catch-boundary.md)**
+- **[Sessions](./research-notes/5-using-session.md)**
 
 ## Most Important Docs Sources
 
