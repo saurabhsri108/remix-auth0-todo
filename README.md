@@ -2,7 +2,45 @@
 
 ## Aim
 
-To build a full functional todo app or perhaps a Kanban Board to understand how remix works in depth. The goal is to learn data flow, architecture, styling, authentication, forms, etc. in remix.
+To build a simple fully functional E-Commerce App to understand how remix works in depth. The goal is to learn data flow, architecture, styling, authentication, forms, etc. in remix.
+
+## Steps to Install
+
+- Clone this repo.
+- Install node version 16 and yarn version 1.22.17
+- Run "yarn" to install the dependencies
+- Create a local **".env"** file and put these variables:
+
+  ```js
+  NODE_ENV = 'development';
+  AUTH0_CLIENT_ID = 'YOUR_AUTH0_CLIENT_ID';
+  AUTH0_CLIENT_SECRET = 'YOUR_AUTH0_CLIENT_SECRET';
+  AUTH0_CLIENT_DOMAIN = 'YOUR_AUTH0_CLIENT_DOMAIN';
+
+  DATABASE_URL = 'YOUR_LOCAL_MYSQL_URI';
+  // or
+  DATABASE_URL = 'YOUR_PLANETSCALE_URI';
+  ```
+
+- Run **"npx prisma migrate dev --name storeapp"** to create the migration file using prisma. This will create mysql tables under storeapp database on your MySQL. **Note:** This won't work in case of planetscale URI due to permission error.
+- To use PlanetScale rather than local MySQL, uncomment the referentialIntegrity parts below from the **schema.prisma** file:
+
+  ```js
+  generator client {
+  provider = "prisma-client-js"
+  // previewFeatures = ["referentialIntegrity"]
+  }
+
+  datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  // referentialIntegrity = true
+  }
+  ```
+
+- Run **"npx prisma db push"** for planetscale case instead as it works.
+- Run **"npx prisma studio"** to start the prisma studio tool. Requires prisma installation.
+- Run **"yarn dev"** to start the app. Note to change the **dev script** in package.json file.
 
 ## Philosophy of Remix
 
@@ -103,10 +141,10 @@ Hint: useFetcher() is the important thing here.
 
 ## Some important topics
 
-- **[HTTP Caching](./read-me-docs/1-http-caching.md)**
-- **[CDN Caching, Static Site Generation, and Server Side Rendering](./read-me-docs/2-cdn-ssg-ssr.md)**
-- **[Data Flow](./read-me-docs/3-data-flow.md)**
-- **[Error Boundary](./read-me-docs/4-error-boundary.md)**
+- **[HTTP Caching](./read-me-docs/research-notes/1-http-caching.md)**
+- **[CDN Caching, Static Site Generation, and Server Side Rendering](./read-me-docs/research-notes/2-cdn-ssg-ssr.md)**
+- **[Data Flow](./read-me-docs/research-notes/3-data-flow.md)**
+- **[Error Boundary](./read-me-docs/research-notes/4-error-boundary.md)**
 
 ## Most Important Docs Sources
 

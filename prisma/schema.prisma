@@ -1,12 +1,12 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
+  provider = "prisma-client-js"
+  // previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-  provider             = "mysql"
-  url                  = env("PLANETSCALE_DATABASE_URL")
-  referentialIntegrity = "prisma"
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  // referentialIntegrity = true
 }
 
 enum Role {
@@ -22,51 +22,73 @@ enum PaymentMode {
 }
 
 model User {
-  id             String     @id @default(cuid())
-  auth0_id       String     @unique
-  firstname      String
-  lastname       String
-  email          String     @unique
-  role           Role       @default(USER)
-  password       String
-  phone_number   Int?
-  bio            String?
-  date_of_birth  DateTime?
-  avatar         String?    @unique
-  address_line_1 String?
-  address_line_2 String?
-  city           String?
-  state          String?
-  pincode        Int?
-  country        String?
-  reviews        Reviews[]
-  orders         Order[]
-  carts          Cart[]
-  wishlists      Wishlist[]
-  created_at     DateTime   @default(now())
-  updated_at     DateTime   @updatedAt
+  id                        String            @id @default(cuid())
+  auth0_id                  String            @unique
+  username                  String            @unique
+  firstname                 String
+  lastname                  String
+  email                     String            @unique
+  email_verified            Boolean           @default(false)
+  password                  String
+  role                      Role              @default(USER)
+  phone_number              Int?
+  bio                       String?
+  date_of_birth             DateTime?
+  avatar_url                String?           @unique
+  address_line_1            String?
+  address_line_2            String?
+  city                      String?
+  state                     String?
+  pincode                   Int?
+  country                   String?
+  reviews                   Reviews[]
+  orders                    Order[]
+  carts                     Cart[]
+  wishlists                 Wishlist[]
+  user_login_details        UserLoginDetail[]
+  accepted_terms            Boolean           @default(false)
+  accepted_privacy_policy   Boolean           @default(false)
+  accepted_cookie_policy    Boolean           @default(false)
+  accepted_marketing_policy Boolean           @default(false)
+  created_at                DateTime          @default(now())
+  updated_at                DateTime          @updatedAt
 
   @@index([auth0_id, email])
 }
 
+model UserLoginDetail {
+  id             String    @id @default(cuid())
+  user           User      @relation(fields: [user_id], references: [id])
+  user_id        String    @unique
+  remember_token String    @unique
+  last_login     DateTime?
+  logged_in_time DateTime?
+  last_login_ip  String?
+  created_at     DateTime  @default(now())
+  updated_at     DateTime  @updatedAt
+}
+
 model Product {
-  id          String    @id @default(cuid())
-  name        String    @unique
-  description String?
-  rating      Int
-  price       Int
-  quantity    Int
-  reviews     Reviews[]
-  catalog     Catalog   @relation(fields: [catalog_id], references: [id])
-  catalog_id  String    @unique
-  order       Order?    @relation(fields: [order_id], references: [id])
-  order_id    String?
-  cart        Cart?     @relation(fields: [cart_id], references: [id])
-  cart_id     String?
-  wishlist    Wishlist? @relation(fields: [wishlist_id], references: [id])
-  wishlist_id String?
-  created_at  DateTime  @default(now())
-  updated_at  DateTime  @updatedAt
+  id                  String    @id @default(cuid())
+  name                String    @unique
+  slug                String    @unique
+  description         String?
+  description_details String?
+  short_description   String?
+  rating              Int
+  price               Int
+  quantity            Int
+  reviews             Reviews[]
+  catalog             Catalog   @relation(fields: [catalog_id], references: [id])
+  catalog_id          String    @unique
+  order               Order?    @relation(fields: [order_id], references: [id])
+  order_id            String?
+  cart                Cart?     @relation(fields: [cart_id], references: [id])
+  cart_id             String?
+  wishlist            Wishlist? @relation(fields: [wishlist_id], references: [id])
+  wishlist_id         String?
+  created_at          DateTime  @default(now())
+  updated_at          DateTime  @updatedAt
 }
 
 model Reviews {
