@@ -26,7 +26,7 @@ export const Header = ({ isLoggedIn, avatar_url, username }: IUser) => {
                     </span>
                     <input type="search" name="search" placeholder='Search for products...' className="w-full p-2 pl-10 border border-gray-500 rounded-none outline-none dark:border-light placeholder:text-gray-500 placeholder:font-normal dark:text-dark" />
                 </div>
-                <button type="submit" className='px-6 py-2 transition duration-200 ease-in-out border bg-dark border-dark hover:bg-darkhover focus:bg-darkhover active:bg-darkhover dark:border-light'>Search</button>
+                <button type="submit" className='px-6 py-2 transition duration-200 ease-in-out border bg-dark border-dark hover:bg-darkhover focus:bg-darkhover active:bg-darkhover dark:border-light' aria-label="Search">Search</button>
             </Form>
             <nav className='flex flex-row items-center justify-center gap-2'>
                 <NavLink to="/cart" className="flex items-center justify-start px-4 py-2 text-xl font-semibold">
@@ -39,7 +39,7 @@ export const Header = ({ isLoggedIn, avatar_url, username }: IUser) => {
                 </NavLink>
                 {!isLoggedIn ? (
                     <Form action="/auth/auth0/auth0" method="post">
-                        <button type="submit" className="flex items-center justify-start px-4 py-2 pr-0 text-xl font-semibold transition duration-200 ease-in-out cursor-pointer lg:pr-4 hover:text-primary focus:text-primary active:text-primary hover:dark:text-secondary focus:dark:text-secondary active:dark:text-secondary">
+                        <button type="submit" className="flex items-center justify-start px-4 py-2 pr-0 text-xl font-semibold transition duration-200 ease-in-out cursor-pointer lg:pr-4 hover:text-primary focus:text-primary active:text-primary hover:dark:text-secondary focus:dark:text-secondary active:dark:text-secondary" aria-label="Login">
                             <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
                             </svg>
@@ -64,7 +64,7 @@ export const Header = ({ isLoggedIn, avatar_url, username }: IUser) => {
                     </span>
                     <input type="search" name="search" placeholder='Search for products...' className="w-full p-2 pl-8 text-sm border border-gray-500 rounded-none outline-none sm:pl-10 sm:text-lg dark:border-light placeholder:text-gray-500 placeholder:font-normal dark:text-dark" />
                 </div>
-                <button type="submit" className='px-6 py-2 text-sm transition duration-200 ease-in-out border sm:text-lg bg-dark border-dark hover:bg-darkhover focus:bg-darkhover active:bg-darkhover dark:border-light'>Search</button>
+                <button type="submit" className='px-6 py-2 text-sm transition duration-200 ease-in-out border sm:text-lg bg-dark border-dark hover:bg-darkhover focus:bg-darkhover active:bg-darkhover dark:border-light' aria-label="Search">Search</button>
             </Form>
         </div>
     </header >;
