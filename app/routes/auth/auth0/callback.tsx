@@ -5,6 +5,6 @@ import { authenticator } from '~/utils/auth.server';
 export const loader: LoaderFunction = ({ request }) => {
     return authenticator.authenticate('auth0', request, {
         successRedirect: '/',
-        failureRedirect: '/auth/auth0/login',
+        failureRedirect: '/',
     });
 };
