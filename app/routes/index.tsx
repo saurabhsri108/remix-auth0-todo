@@ -11,9 +11,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export const action: ActionFunction = async ({ request }) => {
     const body = await request.formData();
-    const search_param = body.get('search');
-    console.log(search_param);
-    return json(search_param);
+    return json(body);
 };
 
 export default function Index() {
