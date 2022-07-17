@@ -34,7 +34,7 @@ To build a simple fully functional E-Commerce App to understand how remix works 
   datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
-  // referentialIntegrity = true
+  // referentialIntegrity = "prisma"
   }
   ```
 
